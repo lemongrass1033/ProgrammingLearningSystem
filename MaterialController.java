@@ -1,37 +1,84 @@
 package com.mycompany.programminglearningsystem.controller;
 
-import com.mycompany.programminglearningsystem.dao.UserDAO;
-import com.mycompany.programminglearningsystem.model.User;
+import java.util.ArrayList;
+import com.mycompany.programminglearningsystem.model.Skill;
+import com.mycompany.programminglearningsystem.model.Skill;
 
-public class AdminController {
+public class CompatibilityCalculator {
 
-    public User searchUser(
-            String username) {
+    public double calculateSimilarity(
+            ArrayList<Skill> user1Skills,
+            ArrayList<Skill> user2Skills) {
 
-        UserDAO dao =
-                new UserDAO();
+        int intersection =
+                getIntersection(
+                        user1Skills,
+                        user2Skills);
 
-        return dao.getUserByUsername(
-                username);
+        int union =
+                getUnion(
+                        user1Skills,
+                        user2Skills);
+
+        if(union == 0) {
+
+            return 0;
+        }
+
+        return 1.0 -
+               ((double) intersection / union);
     }
-    public boolean deactivateUser(
-        String username) {
 
-    UserDAO dao =
-            new UserDAO();
+    public int getIntersection(
+            ArrayList<Skill> user1Skills,
+            ArrayList<Skill> user2Skills) {
 
-    return dao.deactivateUser(
-            username);
-}
-    public boolean updateRole(
-        String username,
-        String role) {
+        int intersection = 0;
 
-    UserDAO dao =
-            new UserDAO();
+        for(Skill skill1 : user1Skills) {
 
-    return dao.updateRole(
-            username,
-            role);
-}
+            for(Skill skill2 : user2Skills) {
+
+                if(skill1.getSkillName()
+                        .equalsIgnoreCase(
+                                skill2.getSkillName())) {
+
+                    intersection++;
+                    break;
+                }
+            }
+        }
+
+        return intersection;
+    }
+
+    public int getUnion(
+            ArrayList<Skill> user1Skills,
+            ArrayList<Skill> user2Skills) {
+
+        ArrayList<String> uniqueSkills =
+                new ArrayList<>();
+
+        for(Skill skill : user1Skills) {
+
+            if(!uniqueSkills.contains(
+                    skill.getSkillName())) {
+
+                uniqueSkills.add(
+                        skill.getSkillName());
+            }
+        }
+
+        for(Skill skill : user2Skills) {
+
+            if(!uniqueSkills.contains(
+                    skill.getSkillName())) {
+
+                uniqueSkills.add(
+                        skill.getSkillName());
+            }
+        }
+
+        return uniqueSkills.size();
+    }
 }

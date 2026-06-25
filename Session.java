@@ -1,22 +1,7 @@
-public class TeamMatch {
+package com.mycompany.programminglearningsystem.session;
 
-    private String email;
+public class Session {
 
-    private double score;
-
-    public TeamMatch(
-            String email,
-            double score){
-
-        this.email = email;
-        this.score = score;
-    }
-
-    public String getEmail(){
-        return email;
-    }
-
-    public double getScore(){
-        return score;
-    }
+    public static String currentUserEmail;
+     public static String selectedStudentEmail;
 }

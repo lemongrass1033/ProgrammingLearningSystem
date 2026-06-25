@@ -1,84 +1,338 @@
 package com.mycompany.programminglearningsystem.controller;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import com.mycompany.programminglearningsystem.database.DatabaseConnection;
 import java.util.ArrayList;
-import com.mycompany.programminglearningsystem.model.Skill;
-import com.mycompany.programminglearningsystem.model.Skill;
+import com.mycompany.programminglearningsystem.model.Material;
 
-public class CompatibilityCalculator {
+public class MaterialController {
 
-    public double calculateSimilarity(
-            ArrayList<Skill> user1Skills,
-            ArrayList<Skill> user2Skills) {
+    private ArrayList<Material> materials;
 
-        int intersection =
-                getIntersection(
-                        user1Skills,
-                        user2Skills);
+    public MaterialController() {
+    materials = new ArrayList<>();
+}
 
-        int union =
-                getUnion(
-                        user1Skills,
-                        user2Skills);
+    public void uploadMaterial(Material material) {
 
-        if(union == 0) {
+    materials.add(material);
 
-            return 0;
+    
+
+}
+public Material getMaterial(int materialID) {
+
+    for(Material m : materials) {
+
+        if(m.getMaterialID() == materialID) {
+
+            return m;
         }
-
-        return 1.0 -
-               ((double) intersection / union);
     }
 
-    public int getIntersection(
-            ArrayList<Skill> user1Skills,
-            ArrayList<Skill> user2Skills) {
+    return null;
+}
+    
+    public void addMaterialToDatabase(Material material) {
 
-        int intersection = 0;
+    try {
 
-        for(Skill skill1 : user1Skills) {
+        Connection conn =
+                DatabaseConnection.getConnection();
 
-            for(Skill skill2 : user2Skills) {
+        String sql ="INSERT INTO material "
+                + "(materialID,fileName,fileType,topicID) "
+                + "VALUES (?,?,?,?)";
 
-                if(skill1.getSkillName()
-                        .equalsIgnoreCase(
-                                skill2.getSkillName())) {
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
 
-                    intersection++;
-                    break;
-                }
-            }
+        ps.setInt(1,material.getMaterialID());
+
+        ps.setString(2,material.getFileName());
+
+        ps.setString(3,material.getFileType());
+        
+        ps.setInt(4,material.getTopicID());
+
+        ps.executeUpdate();
+
+        System.out.println("Material Saved");
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+
+    }
+}
+    
+    public String searchMaterialByName(
+        String keyword) {
+
+    String result = "";
+
+    try {
+
+        Connection conn =
+                DatabaseConnection.getConnection();
+
+        String sql =
+                "SELECT * FROM material "
+                + "WHERE fileName LIKE ?";
+
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+        ps.setString(
+                1,
+                "%" + keyword + "%");
+
+        ResultSet rs =
+                ps.executeQuery();
+
+        while(rs.next()) {
+
+            result +=
+                    "Material ID : "
+                    + rs.getInt("materialID")
+                    + "\nFile Name : "
+                    + rs.getString("fileName")
+                    + "\nFile Type : "
+                    + rs.getString("fileType")
+                    + "\n-------------------\n";
         }
 
-        return intersection;
+        if(result.isEmpty()) {
+
+            result =
+                    "No Material Found";
+        }
+
+    } catch(Exception e) {
+
+        e.printStackTrace();
     }
 
-    public int getUnion(
-            ArrayList<Skill> user1Skills,
-            ArrayList<Skill> user2Skills) {
+    return result;
+}
+    
+    public String viewMaterialsFromDatabase() {
 
-        ArrayList<String> uniqueSkills =
-                new ArrayList<>();
+    String result = "";
 
-        for(Skill skill : user1Skills) {
+    try {
 
-            if(!uniqueSkills.contains(
-                    skill.getSkillName())) {
+        Connection conn =
+                DatabaseConnection.getConnection();
 
-                uniqueSkills.add(
-                        skill.getSkillName());
-            }
+        String sql =
+                "SELECT * FROM material";
+
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+        ResultSet rs =
+                ps.executeQuery();
+
+        while(rs.next()) {
+
+            result +=
+                    "Material ID : "
+                    + rs.getInt("materialID")
+                    + "\nFile Name : "
+                    + rs.getString("fileName")
+                    + "\nFile Type : "
+                    + rs.getString("fileType")
+                    + "\n-------------------\n";
         }
 
-        for(Skill skill : user2Skills) {
+    } catch(Exception e) {
 
-            if(!uniqueSkills.contains(
-                    skill.getSkillName())) {
-
-                uniqueSkills.add(
-                        skill.getSkillName());
-            }
-        }
-
-        return uniqueSkills.size();
+        e.printStackTrace();
     }
+
+    return result;
+}
+    
+    public void updateMaterialInDatabase(
+        Material material) {
+
+    try {
+
+        Connection conn =
+                DatabaseConnection.getConnection();
+
+        String sql =
+                "UPDATE material "
+                + "SET fileName=?, "
+                + "fileType=? "
+                + "WHERE materialID=?";
+
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+        ps.setString(1,
+                material.getFileName());
+
+        ps.setString(2,
+                material.getFileType());
+
+        ps.setInt(3,
+                material.getMaterialID());
+
+        ps.executeUpdate();
+
+        System.out.println(
+                "Material Updated");
+
+    } catch(Exception e) {
+
+        e.printStackTrace();
+    }
+}
+    
+    public void deleteMaterialFromDatabase(
+        int materialID) {
+
+    try {
+
+        Connection conn =
+                DatabaseConnection.getConnection();
+
+        String sql =
+                "DELETE FROM material "
+                + "WHERE materialID=?";
+
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+        ps.setInt(1, materialID);
+
+        ps.executeUpdate();
+
+        System.out.println(
+                "Material Deleted");
+
+    } catch(Exception e) {
+
+        e.printStackTrace();
+    }
+}
+    
+    public String viewMaterialByID(
+        int materialID) {
+
+    String result = "";
+
+    try {
+
+        Connection conn =
+                DatabaseConnection.getConnection();
+
+        String sql =
+                "SELECT * FROM material "
+                + "WHERE materialID = ?";
+
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+        ps.setInt(1, materialID);
+
+        ResultSet rs =
+                ps.executeQuery();
+
+        if(rs.next()) {
+
+            result =
+                    "Material ID : "
+                    + rs.getInt("materialID")
+                    + "\nFile Name : "
+                    + rs.getString("fileName")
+                    + "\nFile Type : "
+                    + rs.getString("fileType");
+
+        } else {
+
+            result =
+                    "Material Not Found";
+        }
+
+    } catch(Exception e) {
+
+        e.printStackTrace();
+    }
+
+    return result;
+}
+    
+    public String viewMaterialByTopic(
+        int topicID) {
+
+    String result = "";
+
+    try {
+
+        Connection conn =
+                DatabaseConnection.getConnection();
+
+        String sql =
+                "SELECT * FROM material "
+                + "WHERE topicID=?";
+
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+        ps.setInt(1, topicID);
+
+        ResultSet rs =
+                ps.executeQuery();
+
+        while(rs.next()) {
+
+            result +=
+                    rs.getString("fileName")
+                    + "\n";
+        }
+
+    } catch(Exception e) {
+
+        e.printStackTrace();
+    }
+
+    return result;
+}
+    
+    public boolean materialExists(
+        int materialID) {
+
+    try {
+
+        Connection conn =
+                DatabaseConnection.getConnection();
+
+        String sql =
+                "SELECT * FROM material "
+                + "WHERE materialID=?";
+
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+        ps.setInt(
+                1,
+                materialID);
+
+        ResultSet rs =
+                ps.executeQuery();
+
+        return rs.next();
+
+    } catch(Exception e) {
+
+        e.printStackTrace();
+    }
+
+    return false;
+}
 }

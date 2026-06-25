@@ -1,189 +1,297 @@
 package com.mycompany.programminglearningsystem.controller;
 
-import com.mycompany.programminglearningsystem.dao.UserDAO;
-import com.mycompany.programminglearningsystem.dao.SkillDAO;
-import com.mycompany.programminglearningsystem.model.Skill;
 import java.util.ArrayList;
-import com.mycompany.programminglearningsystem.session.Session;
-public class TeamFormationController {
-private ArrayList<String> bestUsers =
-        new ArrayList<>();
-    UserDAO dao =
-            new UserDAO();
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import com.mycompany.programminglearningsystem.model.Topic;
+import com.mycompany.programminglearningsystem.database.DatabaseConnection;
 
+public class TopicController {
 
-public String findBestMatch(
-        ArrayList<Skill> requiredSkills) {
-bestUsers.clear();
-    SkillDAO dao =
-            new SkillDAO();
+    private ArrayList<Topic> topics;
 
-    CompatibilityCalculator calc =
-            new CompatibilityCalculator();
+    public TopicController() {
 
-    ArrayList<String> emails =
-            dao.getAllEmails();
+        topics = new ArrayList<>();
+    }
 
- String currentEmail =
-        Session.currentUserEmail;
+    public void createTopic(
+            Topic topic) {
 
-    double bestScore =
-            Double.MAX_VALUE;
+        topics.add(topic);
+    }
 
+    public ArrayList<Topic> getTopics() {
 
-    int bestIntersection = 0;
-    int bestUnion = 0;
+        return topics;
+    }
+    
+    public void addTopicToDatabase(
+        Topic topic) {
 
-    StringBuilder report =
-            new StringBuilder();
+    try {
 
-    report.append(
-            "========== TEAM FORMATION REPORT ==========\n\n");
+        Connection conn =
+                DatabaseConnection.getConnection();
 
-    report.append(
-            "Required Skills : ")
-            .append(requiredSkills)
-            .append("\n\n");
+        String sql =
+                "INSERT INTO topic "
+                + "(topicID,topicName,course_id) "
+                + "VALUES (?,?,?)";
 
-    report.append(
-            "========== CANDIDATE ANALYSIS ==========\n\n");
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
 
-    for(String email : emails) {
+        ps.setInt(
+                1,
+                topic.getTopicID());
 
-        if(email.equals(currentEmail)) {
+        ps.setString(
+                2,
+                topic.getTopicName());
 
-            continue;
+        ps.setInt(
+                3,
+                topic.getCourseID());
+
+        ps.executeUpdate();
+
+        System.out.println(
+                "Topic Saved");
+
+    } catch(Exception e) {
+
+        e.printStackTrace();
+    }
+}
+    public String viewTopicsFromDatabase() {
+
+    String result = "";
+
+    try {
+
+        Connection conn =
+                DatabaseConnection.getConnection();
+
+        String sql =
+                "SELECT * FROM topic";
+
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+        ResultSet rs =
+                ps.executeQuery();
+
+        while(rs.next()) {
+
+            result +=
+                    "Topic ID : "
+                    + rs.getInt("topicID")
+                    + "\nTopic Name : "
+                    + rs.getString("topicName")
+                    + "\nCourse ID : "
+                    + rs.getString("course_id")
+                    + "\n-------------------\n";
         }
 
-        ArrayList<Skill> otherSkills =
-                dao.getSkillsByEmail(
-                        email);
+    } catch(Exception e) {
 
-        double score =
-                calc.calculateSimilarity(
-                        requiredSkills,
-                        otherSkills);
+        e.printStackTrace();
+    }
 
-        int currentIntersection =
-                calc.getIntersection(
-                        requiredSkills,
-                        otherSkills);
+    return result;
+}
+    public void updateTopicInDatabase(
+        Topic topic) {
 
-        int currentUnion =
-                calc.getUnion(
-                        requiredSkills,
-                        otherSkills);
+    try {
 
-        report.append(
-                "Candidate : ")
-                .append(email)
-                .append("\n");
+        Connection conn =
+                DatabaseConnection.getConnection();
 
-        report.append(
-                "Common Skills : ")
-                .append(currentIntersection)
-                .append("\n");
+        String sql =
+                "UPDATE topic "
+                + "SET topicName=?, "
+                + "course_id=? "
+                + "WHERE topicID=?";
 
-        report.append(
-                "Total Unique Skills : ")
-                .append(currentUnion)
-                .append("\n");
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
 
-        report.append(
-                "Compatibility : ")
-                .append(String.format(
-                        "%.2f%%",
-                        (1 - score) * 100))
-                .append("\n\n");
+        ps.setString(
+                1,
+                topic.getTopicName());
 
-     if(score < bestScore) {
+        ps.setInt(
+                2,
+                topic.getCourseID());
 
-    bestScore = score;
+        ps.setInt(
+                3,
+                topic.getTopicID());
 
-    bestUsers.clear();
-    bestUsers.add(email);
+        ps.executeUpdate();
 
-            bestIntersection =
-                    currentIntersection;
+        System.out.println(
+                "Topic Updated");
 
-            bestUnion =
-                    currentUnion;
+    } catch(Exception e) {
+
+        e.printStackTrace();
+    }
+}
+    
+    public void deleteTopicFromDatabase(
+        int topicID) {
+
+    try {
+
+        Connection conn =
+                DatabaseConnection.getConnection();
+
+        String sql =
+                "DELETE FROM topic "
+                + "WHERE topicID=?";
+
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+        ps.setInt(
+                1,
+                topicID);
+
+        ps.executeUpdate();
+
+        System.out.println(
+                "Topic Deleted");
+
+    } catch(Exception e) {
+
+        e.printStackTrace();
+    }
+}
+    
+    public String viewTopicsByCourse(
+        int courseID) {
+
+    String result = "";
+
+    try {
+
+        Connection conn =
+                DatabaseConnection.getConnection();
+
+        String sql =
+                "SELECT * FROM topic "
+                + "WHERE course_id=?";
+
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+        ps.setInt(
+                1,
+                courseID);
+
+        ResultSet rs =
+                ps.executeQuery();
+
+        while(rs.next()) {
+
+            result +=
+                    rs.getString("topicName")
+                    + "\n";
         }
-     else if(score == bestScore) {
 
-    bestUsers.add(email);
-}
+        if(result.isEmpty()) {
+
+            result =
+                    "No Topics Found";
+        }
+
+    } catch(Exception e) {
+
+        e.printStackTrace();
     }
 
-report.append(
-        "========== BEST MATCHES ==========\n\n");
-
-for(String user : bestUsers) {
-
-    report.append(
-            "Recommended Teammate : ")
-            .append(user)
-            .append("\n");
+    return result;
 }
-if(bestUsers.size() > 1) {
+    
+    public String searchTopicByCourseID(
+        int courseID) {
 
-    report.append("\n\n");
+    String result = "";
 
-    report.append(
-        "Multiple candidates found.\n");
+    try {
 
-    report.append(
-        "Please choose one teammate.\n");
-}
+        Connection conn =
+                DatabaseConnection.getConnection();
 
-report.append("\n");
+        String sql =
+                "SELECT * FROM topic "
+                + "WHERE course_id=?";
 
-report.append(
-        "Common Skills : ")
-        .append(bestIntersection)
-        .append("\n");
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
 
-report.append(
-        "Total Unique Skills : ")
-        .append(bestUnion)
-        .append("\n");
+        ps.setInt(
+                1,
+                courseID);
 
-report.append(
-        "Compatibility Score : ")
-        .append(String.format(
-                "%.2f%%",
-                (1 - bestScore) * 100))
-        .append("\n");
+        ResultSet rs =
+                ps.executeQuery();
 
-report.append(
-        "Recommendation : ")
-        .append(
-                getRecommendation(
-                        bestScore));
-    return report.toString();
-}
-private String getRecommendation(
-        double score){
+        while(rs.next()) {
 
-    if(score <= 0.2){
+            result +=
+                    rs.getInt("topicID")
+                    + " - "
+                    + rs.getString("topicName")
+                    + "\n";
+        }
 
-        return "Excellent Match";
+    } catch(Exception e) {
+
+        e.printStackTrace();
     }
 
-    if(score <= 0.5){
+    if(result.isEmpty()) {
 
-        return "Good Match";
+        return "No Topics Found";
     }
 
-    if(score <= 0.7){
-
-        return "Moderate Match";
-    }
-
-    return "Low Match";
+    return result;
 }
-public ArrayList<String> getBestUsers() {
+    
+    public boolean topicExists(
+        int topicID) {
 
-    return bestUsers;
+    try {
+
+        Connection conn =
+                DatabaseConnection.getConnection();
+
+        String sql =
+                "SELECT * FROM topic "
+                + "WHERE topicID=?";
+
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+        ps.setInt(
+                1,
+                topicID);
+
+        ResultSet rs =
+                ps.executeQuery();
+
+        return rs.next();
+
+    } catch(Exception e) {
+
+        e.printStackTrace();
+    }
+
+    return false;
 }
 }
