@@ -1,0 +1,364 @@
+package com.mycompany.programminglearningsystem.view;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableCellRenderer;
+import java.sql.ResultSet;
+import com.mycompany.programminglearningsystem.view.AdminFrame;
+import com.mycompany.programminglearningsystem.controller.TopsisCalculator;
+import com.mycompany.programminglearningsystem.database.DatabaseManager;
+import java.util.HashMap;
+public class ReportFrame extends javax.swing.JFrame {
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ReportFrame.class.getName());
+
+   
+    public ReportFrame() {
+        initComponents();
+       
+        tblReport.getColumnModel().getColumn(0).setPreferredWidth(0);
+        
+        DefaultTableCellRenderer centerRenderer =new DefaultTableCellRenderer();
+
+centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+for(int i = 0; i < tblReport.getColumnCount(); i++) {
+
+    tblReport.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+}
+
+((DefaultTableCellRenderer)
+tblReport.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+
+tblReport.setRowHeight(25);
+    }
+
+
+
+ 
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        txtProgressWeight = new javax.swing.JLabel();
+        btnCalculateTOPSIS = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblReport = new javax.swing.JTable();
+        jRankingREsult = new javax.swing.JLabel();
+        txtCompletionWeight = new javax.swing.JLabel();
+        txtSelectedCriteria = new javax.swing.JLabel();
+        txtLearningProgress = new javax.swing.JLabel();
+        txtCompletionPercentage = new javax.swing.JLabel();
+        line1 = new javax.swing.JLabel();
+        line2 = new javax.swing.JLabel();
+        txfProgressWeight = new javax.swing.JTextField();
+        txfCompletionWeight = new javax.swing.JTextField();
+        btnBack = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        txtProgressWeight.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtProgressWeight.setText("Progress Weight (%)         :");
+
+        btnCalculateTOPSIS.setText("Calculate");
+        btnCalculateTOPSIS.addActionListener(this::btnCalculateTOPSISActionPerformed);
+
+        tblReport.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Rank", "User ID", "Learning Progress", "Completion Status", "Score"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblReport);
+
+        jRankingREsult.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        jRankingREsult.setText("Ranking Result");
+
+        txtCompletionWeight.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtCompletionWeight.setText("Completion Weight (%)     :");
+
+        txtSelectedCriteria.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        txtSelectedCriteria.setText("Selected Criteria");
+
+        txtLearningProgress.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtLearningProgress.setText("1. Learning Progress");
+
+        txtCompletionPercentage.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtCompletionPercentage.setText("2. Completion Percentage");
+
+        line1.setText("------------------------------------------------------------------------------------------------------------------");
+
+        line2.setText("-------------------------------------------------------------------------------------------------------------------");
+
+        txfProgressWeight.addActionListener(this::txfProgressWeightActionPerformed);
+
+        txfCompletionWeight.addActionListener(this::txfCompletionWeightActionPerformed);
+
+        btnBack.setText("Back");
+        btnBack.addActionListener(this::btnBackActionPerformed);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtLearningProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCompletionPercentage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtSelectedCriteria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtProgressWeight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtCompletionWeight, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txfCompletionWeight)
+                            .addComponent(txfProgressWeight, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addComponent(btnCalculateTOPSIS)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(line1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(line2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jRankingREsult, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBack)))))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtProgressWeight)
+                    .addComponent(txfProgressWeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCompletionWeight)
+                    .addComponent(txfCompletionWeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCalculateTOPSIS))
+                .addGap(23, 23, 23)
+                .addComponent(line1)
+                .addGap(18, 18, 18)
+                .addComponent(txtSelectedCriteria)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtLearningProgress)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtCompletionPercentage)
+                .addGap(18, 18, 18)
+                .addComponent(line2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnBack)
+                    .addComponent(jRankingREsult))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCalculateTOPSISActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalculateTOPSISActionPerformed
+  double progressWeight = Double.parseDouble(txfProgressWeight.getText());
+
+double completionWeight = Double.parseDouble(txfCompletionWeight.getText());
+
+if(Math.abs(
+        (progressWeight + completionWeight) - 100) > 0.01) {
+
+    JOptionPane.showMessageDialog(this,"Total Weight Must Equal 100%");
+    return;
+}
+
+TopsisCalculator topsis = new TopsisCalculator( progressWeight,completionWeight);
+
+DefaultTableModel model =(DefaultTableModel)
+        tblReport.getModel();
+
+model.setRowCount(0);
+
+DatabaseManager db =new DatabaseManager();
+
+HashMap<Integer, Double> progressMap =new HashMap<>();
+
+try {
+    ResultSet progressRs =db.getLearningProgress();
+    while(progressRs.next()) {
+
+        progressMap.put(
+            progressRs.getInt("enrollment_id"),
+
+            progressRs.getDouble("progress_percentage")
+        );
+    }
+
+    ResultSet completionRs =db.getCompletionStatus();
+    while(completionRs.next()) {
+
+        int enrollmentId =completionRs.getInt("enrollment_id");
+
+        if(!progressMap.containsKey(enrollmentId)) {
+            continue;
+        }
+
+        double progressPercentage = progressMap.get(enrollmentId);
+
+        double completionPercentage = completionRs.getDouble( "completion_percentage");
+
+      double score =
+        topsis.calculateScore(
+                progressPercentage,
+                completionPercentage);
+
+String email =
+        db.getUserEmailByEnrollment(
+                enrollmentId);
+
+if(email.equals("")) {
+    continue;
+}
+
+model.addRow(new Object[]{
+    0,
+    email,
+    progressPercentage,
+    completionPercentage,
+    score
+});
+    }
+
+} catch(Exception e) {
+    e.printStackTrace();
+}
+
+sortAndRank();
+
+jRankingREsult.setText(
+        "Ranking Generated");
+    }//GEN-LAST:event_btnCalculateTOPSISActionPerformed
+
+    private void txfProgressWeightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfProgressWeightActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfProgressWeightActionPerformed
+
+    private void txfCompletionWeightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfCompletionWeightActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfCompletionWeightActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+    new AdminFrame().setVisible(true);
+
+    this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
+
+     private void sortAndRank() {
+
+        DefaultTableModel model =(DefaultTableModel)tblReport.getModel();
+
+        int rows =model.getRowCount();
+
+        for(int i = 0; i < rows - 1; i++) {
+
+            for(int j = i + 1; j < rows; j++) {
+
+                double score1 =Double.parseDouble(model.getValueAt(i,4).toString());
+
+                double score2 = Double.parseDouble(model.getValueAt(j,4).toString());
+
+                if(score2 > score1) {
+                    for(int col = 1; col <= 4; col++) {
+
+                   Object temp = model.getValueAt(i, col);
+
+                   model.setValueAt(model.getValueAt(j, col),i,col);
+
+                  model.setValueAt(temp,j,col);
+}
+                }
+            }
+        }
+
+        for(int i = 0; i < rows; i++) {
+            model.setValueAt(i + 1, i, 0);
+        }
+    }
+
+    private void anotherButtonActionPerformed(
+            java.awt.event.ActionEvent evt) {
+    }
+    
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> new ReportFrame().setVisible(true));
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnCalculateTOPSIS;
+    private javax.swing.JLabel jRankingREsult;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel line1;
+    private javax.swing.JLabel line2;
+    private javax.swing.JTable tblReport;
+    private javax.swing.JTextField txfCompletionWeight;
+    private javax.swing.JTextField txfProgressWeight;
+    private javax.swing.JLabel txtCompletionPercentage;
+    private javax.swing.JLabel txtCompletionWeight;
+    private javax.swing.JLabel txtLearningProgress;
+    private javax.swing.JLabel txtProgressWeight;
+    private javax.swing.JLabel txtSelectedCriteria;
+    // End of variables declaration//GEN-END:variables
+}

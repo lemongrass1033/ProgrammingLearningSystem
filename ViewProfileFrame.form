@@ -1,0 +1,499 @@
+package com.mycompany.programminglearningsystem.view;
+import javax.swing.DefaultListModel;
+import com.mycompany.programminglearningsystem.controller.TopicController;
+import com.mycompany.programminglearningsystem.model.Topic;
+import javax.swing.JOptionPane;
+import com.mycompany.programminglearningsystem.model.User;
+
+public class TopicFrame extends javax.swing.JFrame {
+    
+    private DefaultListModel<String> topicModel =
+        new DefaultListModel<>();
+    
+    private User currentUser;
+    
+    private int currentCourseID;
+    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TopicFrame.class.getName());
+
+    private TopicController controller =
+        new TopicController();
+    
+    /**
+     * Creates new form TopicFrame
+     */
+    public TopicFrame() {
+        initComponents();
+    }
+
+    
+    public TopicFrame(
+        User currentUser,
+        int courseID) {
+
+    initComponents();
+
+    this.currentUser =
+            currentUser;
+    
+    this.currentCourseID = courseID;
+
+     textSearch.setText(
+            String.valueOf(courseID));
+
+    topicList.setModel(topicModel);
+
+String result =
+        controller
+                .searchTopicByCourseID(
+                        courseID);
+
+String[] lines =
+        result.split("\n");
+
+for(String line : lines) {
+
+    if(!line.trim().isEmpty()) {
+
+        topicModel.addElement(line);
+    }
+}
+}
+    
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        textTopicID = new javax.swing.JTextField();
+        textTopicName = new javax.swing.JTextField();
+        textCourseID = new javax.swing.JTextField();
+        btnAddTopic = new javax.swing.JButton();
+        btnViewTopic = new javax.swing.JButton();
+        btnUpdateTopic = new javax.swing.JButton();
+        btnDeleteTopic = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
+        btnManageMaterial = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        textSearch = new javax.swing.JTextField();
+        btnSearchTopic = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        topicList = new javax.swing.JList<>();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Topic ID:");
+
+        jLabel2.setText("Topic Name:");
+
+        jLabel3.setText("CourseID:");
+
+        textTopicID.addActionListener(this::textTopicIDActionPerformed);
+
+        btnAddTopic.setText("Add Topic");
+        btnAddTopic.addActionListener(this::btnAddTopicActionPerformed);
+
+        btnViewTopic.setText("View Topic");
+        btnViewTopic.addActionListener(this::btnViewTopicActionPerformed);
+
+        btnUpdateTopic.setText("Update Topic");
+        btnUpdateTopic.addActionListener(this::btnUpdateTopicActionPerformed);
+
+        btnDeleteTopic.setText("Delete Topic");
+        btnDeleteTopic.addActionListener(this::btnDeleteTopicActionPerformed);
+
+        btnBack.setText("Back");
+        btnBack.addActionListener(this::btnBackActionPerformed);
+
+        btnManageMaterial.setText("Manage Material");
+        btnManageMaterial.addActionListener(this::btnManageMaterialActionPerformed);
+
+        jLabel4.setText("Course ID Search:");
+
+        textSearch.addActionListener(this::textSearchActionPerformed);
+
+        btnSearchTopic.setText("Search Topic");
+        btnSearchTopic.addActionListener(this::btnSearchTopicActionPerformed);
+
+        topicList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                topicListMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(topicList);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(textTopicID, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(textSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSearchTopic)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(textTopicName, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(textCourseID, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(59, 59, 59)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addGap(22, 22, 22))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnDeleteTopic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnUpdateTopic, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                            .addComponent(btnAddTopic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnViewTopic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnBack)
+                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnManageMaterial)
+                                .addGap(22, 22, 22))))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(textTopicID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(textSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSearchTopic))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(textTopicName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(textCourseID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(78, 78, 78))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(69, 69, 69)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnUpdateTopic, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnManageMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnViewTopic, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDeleteTopic, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(113, 113, 113)
+                        .addComponent(btnAddTopic, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBack)
+                        .addGap(16, 16, 16))))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void textTopicIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textTopicIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textTopicIDActionPerformed
+
+    private void btnAddTopicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTopicActionPerformed
+          
+    try {
+
+        if(textTopicID.getText().trim().isEmpty()
+                || textTopicName.getText().trim().isEmpty()
+                || textCourseID.getText().trim().isEmpty()) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Please fill all fields");
+
+            return;
+        }
+
+        int topicID =
+                Integer.parseInt(
+                        textTopicID.getText());
+
+        String topicName =
+                textTopicName.getText();
+
+        int courseID =
+                Integer.parseInt(
+                        textCourseID.getText());
+
+        // 检查 Topic ID 是否已存在
+        if(controller.topicExists(topicID)) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Topic ID already exists");
+
+            return;
+        }
+
+        Topic topic =
+                new Topic(
+                        topicID,
+                        topicName,
+                        courseID);
+
+        controller.createTopic(topic);
+
+        controller.addTopicToDatabase(topic);
+
+        JOptionPane.showMessageDialog(
+                this,
+                "Topic Added Successfully");
+
+        textTopicID.setText("");
+        textTopicName.setText("");
+        textCourseID.setText("");
+
+    } catch(NumberFormatException e) {
+
+        JOptionPane.showMessageDialog(
+                this,
+                "Topic ID and Course ID must be numbers");
+
+    } catch(Exception e) {
+
+        JOptionPane.showMessageDialog(
+                this,
+                "Error : " + e.getMessage());
+
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_btnAddTopicActionPerformed
+
+    private void btnViewTopicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewTopicActionPerformed
+         String topics =
+            controller
+            .viewTopicsFromDatabase();
+
+    JOptionPane.showMessageDialog(
+            this,
+            topics);
+    }//GEN-LAST:event_btnViewTopicActionPerformed
+
+    private void btnUpdateTopicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateTopicActionPerformed
+         int topicID =
+            Integer.parseInt(
+                    textTopicID.getText());
+
+    String topicName =
+            textTopicName.getText();
+
+    int courseID =
+        Integer.parseInt(
+                textCourseID.getText());
+
+Topic topic =
+        new Topic(
+                topicID,
+                topicName,
+                courseID);
+
+    controller
+            .updateTopicInDatabase(topic);
+
+    JOptionPane.showMessageDialog(
+            this,
+            "Topic Updated Successfully");
+    }//GEN-LAST:event_btnUpdateTopicActionPerformed
+
+    private void btnDeleteTopicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteTopicActionPerformed
+         int topicID =
+            Integer.parseInt(
+                    textTopicID.getText());
+
+    controller
+            .deleteTopicFromDatabase(
+                    topicID);
+
+    JOptionPane.showMessageDialog(
+            this,
+            "Topic Deleted Successfully");
+    }//GEN-LAST:event_btnDeleteTopicActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+
+    ManageCoursesFrame frame =
+            new ManageCoursesFrame();
+
+    frame.setVisible(true);
+
+    dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnManageMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageMaterialActionPerformed
+ 
+        int topicID;
+
+    if(!textTopicID.getText().isEmpty()) {
+
+        topicID =
+                Integer.parseInt(
+                        textTopicID.getText());
+
+    } else {
+
+        String selected =
+                topicList.getSelectedValue();
+
+        if(selected == null) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Please Select a Topic");
+
+            return;
+        }
+
+        topicID =
+                Integer.parseInt(
+                        selected
+                                .split("-")[0]
+                                .trim());
+    }
+
+    MaterialFrame frame =
+            new MaterialFrame(
+                    topicID,
+                    currentCourseID,
+                    currentUser);
+
+    frame.setVisible(true);
+
+    dispose();
+    }//GEN-LAST:event_btnManageMaterialActionPerformed
+
+    private void btnSearchTopicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchTopicActionPerformed
+        int courseID =
+        Integer.parseInt(
+                textSearch.getText());
+
+String result =
+        controller.searchTopicByCourseID(
+                courseID);
+
+JOptionPane.showMessageDialog(
+        this,
+        result);
+
+topicModel.clear();
+
+String[] lines =
+        result.split("\n");
+
+    for(String line : lines) {
+
+        if(!line.trim().isEmpty()) {
+
+            topicModel.addElement(
+                    line);
+        }
+    }
+    System.out.println(
+        "List Size = "
+        + topicModel.size());
+    
+    topicList.setModel(topicModel);
+    }//GEN-LAST:event_btnSearchTopicActionPerformed
+
+    private void topicListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topicListMouseClicked
+        String selected =
+            topicList.getSelectedValue();
+
+    if(selected == null) {
+
+        return;
+    }
+
+    String[] parts =
+            selected.split("-");
+
+    textTopicID.setText(
+            parts[0].trim());
+
+    textTopicName.setText(
+            parts[1].trim());
+    }//GEN-LAST:event_topicListMouseClicked
+
+    private void textSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textSearchActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> new TopicFrame().setVisible(true));
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddTopic;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnDeleteTopic;
+    private javax.swing.JButton btnManageMaterial;
+    private javax.swing.JButton btnSearchTopic;
+    private javax.swing.JButton btnUpdateTopic;
+    private javax.swing.JButton btnViewTopic;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField textCourseID;
+    private javax.swing.JTextField textSearch;
+    private javax.swing.JTextField textTopicID;
+    private javax.swing.JTextField textTopicName;
+    private javax.swing.JList<String> topicList;
+    // End of variables declaration//GEN-END:variables
+}

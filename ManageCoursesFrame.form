@@ -1,0 +1,319 @@
+
+package com.mycompany.programminglearningsystem.view;
+import javax.swing.JOptionPane;
+import com.mycompany.programminglearningsystem.database.DatabaseManager;
+import java.sql.ResultSet;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+public class EnrollmentFrame extends javax.swing.JFrame {
+    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EnrollmentFrame.class.getName());
+
+
+    public EnrollmentFrame() {
+        initComponents();
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+
+    centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+    for(int i = 0;
+        i < jEnrollTable.getColumnCount(); i++) {
+
+        jEnrollTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+    }
+
+    ((DefaultTableCellRenderer)
+    jEnrollTable.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+
+    jEnrollTable.setRowHeight(25);
+    }
+    
+    public EnrollmentFrame(String role) {
+    initComponents();
+
+    if(role.equalsIgnoreCase("Visitor")) {
+        jenrollmentStatus.setVisible(false);
+        cbEnrollStatus.setVisible(false);
+        btnEnroll.setVisible(false);
+        btnDelete.setVisible(false);
+    }
+    }
+   
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        juserId = new javax.swing.JLabel();
+        txtEnrollmentId = new javax.swing.JLabel();
+        jenrollmentStatus = new javax.swing.JLabel();
+        textUserID = new javax.swing.JTextField();
+        TextEnrollmentID = new javax.swing.JTextField();
+        cbEnrollStatus = new javax.swing.JComboBox<>();
+        btnView = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jEnrollTable = new javax.swing.JTable();
+        EnrollList = new javax.swing.JLabel();
+        btnEnroll = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
+        lbCourseID = new javax.swing.JLabel();
+        txtCourseID = new javax.swing.JTextField();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        juserId.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        juserId.setText("User Email                   :");
+
+        txtEnrollmentId.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtEnrollmentId.setText("Enrollment ID         :");
+
+        jenrollmentStatus.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jenrollmentStatus.setText("Enrollment Status   :");
+
+        TextEnrollmentID.addActionListener(this::TextEnrollmentIDActionPerformed);
+
+        cbEnrollStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "Inactive" }));
+        cbEnrollStatus.addActionListener(this::cbEnrollStatusActionPerformed);
+
+        btnView.setText("View");
+        btnView.addActionListener(this::btnViewActionPerformed);
+
+        jEnrollTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Enrollment ID", "User Email", "Course ID", "Status"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jEnrollTable);
+
+        EnrollList.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        EnrollList.setText("Enrollment List");
+
+        btnEnroll.setText("Enroll");
+        btnEnroll.addActionListener(this::btnEnrollActionPerformed);
+
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(this::btnDeleteActionPerformed);
+
+        btnBack.setText("Back");
+        btnBack.addActionListener(this::btnBackActionPerformed);
+
+        lbCourseID.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbCourseID.setText("Course ID               :");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(EnrollList, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jenrollmentStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbEnrollStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtEnrollmentId, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(juserId)
+                                    .addComponent(lbCourseID))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(textUserID, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(TextEnrollmentID, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                                    .addComponent(txtCourseID))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnEnroll, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnView, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnBack, javax.swing.GroupLayout.Alignment.TRAILING)))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(EnrollList)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEnrollmentId)
+                    .addComponent(TextEnrollmentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEnroll))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(juserId)
+                    .addComponent(textUserID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDelete))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnView)
+                    .addComponent(txtCourseID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbCourseID))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBack)
+                    .addComponent(cbEnrollStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jenrollmentStatus))
+                .addGap(13, 13, 13))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+      try {
+        DatabaseManager db = new DatabaseManager();
+        ResultSet rs = db.viewEnrollment();
+        DefaultTableModel model =(DefaultTableModel)
+                jEnrollTable.getModel();
+        model.setRowCount(0);
+        while(rs.next()) {
+
+    model.addRow(new Object[]{
+        rs.getInt("enrollment_id"),
+        rs.getString("user_email"),
+        rs.getInt("course_id"),
+        rs.getString("enrollment_status")
+    });
+}
+
+    } catch(Exception e) {
+
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_btnViewActionPerformed
+
+    private void cbEnrollStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEnrollStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbEnrollStatusActionPerformed
+
+    private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed
+   String email =
+            textUserID.getText();
+
+    int courseId =
+            Integer.parseInt(
+                    txtCourseID.getText());
+
+    String status =
+            cbEnrollStatus
+            .getSelectedItem()
+            .toString();
+
+    DatabaseManager db =
+            new DatabaseManager();
+
+    db.addEnrollment(
+            email,
+            courseId,
+            status);
+
+    JOptionPane.showMessageDialog(
+            this,
+            "Enrollment Added");
+
+    }//GEN-LAST:event_btnEnrollActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        int enrollmentId = Integer.parseInt(TextEnrollmentID.getText());
+
+    DatabaseManager db = new DatabaseManager();
+
+    db.deleteEnrollment(enrollmentId);
+
+    JOptionPane.showMessageDialog( this, "Enrollment Deleted");
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void TextEnrollmentIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextEnrollmentIDActionPerformed
+
+    }//GEN-LAST:event_TextEnrollmentIDActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+         new AdminFrame().setVisible(true);
+
+    this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> new EnrollmentFrame().setVisible(true));
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel EnrollList;
+    private javax.swing.JTextField TextEnrollmentID;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnEnroll;
+    private javax.swing.JButton btnView;
+    private javax.swing.JComboBox<String> cbEnrollStatus;
+    private javax.swing.JTable jEnrollTable;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jenrollmentStatus;
+    private javax.swing.JLabel juserId;
+    private javax.swing.JLabel lbCourseID;
+    private javax.swing.JTextField textUserID;
+    private javax.swing.JTextField txtCourseID;
+    private javax.swing.JLabel txtEnrollmentId;
+    // End of variables declaration//GEN-END:variables
+}
